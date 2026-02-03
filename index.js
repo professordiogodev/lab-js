@@ -85,7 +85,7 @@ function updateCounterDisplay() {
 
 // 4. Arrays & Higher-Order Functions
 function demonstrateArrays() {
-    
+
     // 🟢 Começar um array com números
     const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -181,10 +181,10 @@ function generateGrid() {
     for (let i = 1; i <= 12; i++) {
 
         // 🟡 Demonstração de DOM para criação de elementos:
-        
+
         // 🟡 1. Criar um elemento
         const item = document.createElement('div');
-        
+
         // 🟡 2. Colocar uma classe
         item.className = 'grid-item';
 
@@ -211,57 +211,78 @@ window.addEventListener('load', generateGrid);
 // 🟡 Create - Adicionar um Todo
 function addTodo() {
 
-    // Obter o texto do input do todo a ser adicionado
+    // 🟢 Obter o texto do input do todo a ser adicionado
     const input = document.getElementById('todoInput');
     const text = input.value.trim(); // Limpar os espaços à frente e atrás
 
-    // Verificar se o texto está vazio
+    // 🟢 Verificar se o texto está vazio
     if (!text) {
         alert('Please enter a task!');
         return;
     }
 
-    // Criar um objeto JavaScript para guardar as infos do todo
+    // 🟡 Criar um objeto JavaScript para guardar as infos do todo
     const todo = {
         id: Date.now(),
         text: text,
         completed: false
     };
 
-    // Adicionar o objeto à lista
+    // 🟢 Adicionar o objeto à lista
     todos.push(todo);
 
-    // Limpar o input
+    // 🟢 Limpar o input
     input.value = '';
 
-    // Mostrar todos os Todos
+    // 🟢 Atualizar os Todos
     renderTodos();
 }
 
+// 🟡 Toggle todo - se não estiver feito colocar como feito, e vice versa.
 function toggleTodo(id) {
+
+    // 🟡 Encontrar o todo com o id do todo que a gente clicou
     const todo = todos.find(t => t.id === id);
+
+    // 🟡 Se um todo for encontrado, alterar o seu estado e atualizar
     if (todo) {
-        todo.completed = !todo.completed;
-        renderTodos();
+        todo.completed = !todo.completed; // alterar o estado
+        renderTodos(); // atualizar
     }
 }
 
+// 🟠 - Eliminar um todo:
+// 🟠 Significa atualizar a lista com todos os todos MENOS o que queremos eliminar
 function deleteTodo(id) {
-    todos = todos.filter(t => t.id !== id);
-    renderTodos();
+    todos = todos.filter(t => t.id !== id); // Todos MENOS o que estamos a eliminar
+    renderTodos(); // Atualizar a lista
 }
 
+// 🟡 - Imprimir todos os todos no HTML
 function renderTodos() {
+
+    // 🟢 Obter o elemento HTML onde os todos vão ser inseridos
     const list = document.getElementById('todoList');
+
+    // 🟢 Se não houver todos, mostrar uma mensagem e terminar a função
     if (todos.length === 0) {
         list.innerHTML = '<em>No tasks yet. Add one above!</em>';
-        return;
+        return; // terminamos a função aqui (mais nada é executado caso não haja todos)
     }
 
+    // 🟢 Limpar a lista de todos
     list.innerHTML = '';
+
+    // 🟡 Para cada um dos todos no JavaScript, adicionar um no HTML
     todos.forEach(todo => {
+
+        // 🟡 Criar um elemento <li> (list item) que vai ter o todo
         const li = document.createElement('li');
+
+        // 🟡 Adicionar a classe `task-item` e `completed` (apenas caso estiver completo)
         li.className = `task-item ${todo.completed ? 'completed' : ''}`;
+
+        // 🟠 Dentro do nosso todo <li>, adicionar os componentes do todo:
         li.innerHTML = `
                     <span>${todo.text}</span>
                     <div>
@@ -271,21 +292,34 @@ function renderTodos() {
                         <button onclick="deleteTodo(${todo.id})">🗑️ Delete</button>
                     </div>
                 `;
+
+        // 🟢 No final, adicionar o todo à lista do HTML
         list.appendChild(li);
     });
 }
 
 // 8. Async/Await & Fetch API
+
+// Clicar no botão de fetch random User
 async function fetchRandomUser() {
+    // 🟢 Obter a caixa de output para preencher com os dados da API
     const output = document.getElementById('apiOutput');
+
+    // 🟢 Ao clicar no botão, informar que vamos carregar informações do user
     output.innerHTML = '<div class="loading">Loading user data...</div>';
 
     try {
+        // 🟢 Obter um user aleatório da API
         const response = await fetch('https://randomuser.me/api/');
+
+        // 🟢 Transformar o texto de resultado em JSON
         const data = await response.json();
+
+        // 🟢 Obter o user (ele vem dentro de um array com um elemento)
         const user = data.results[0];
 
-        output.innerHTML = `
+        // 🟡 Criar o nosso elemento HTML com título, imagem, nome, email, localização, phone (tudo vindo da API)
+        const html = `
                     <h3>Random User:</h3>
                     <img src="${user.picture.large}" alt="User" style="border-radius: 50%; margin: 10px 0;">
                     <br><strong>Name:</strong> ${user.name.first} ${user.name.last}
@@ -293,26 +327,42 @@ async function fetchRandomUser() {
                     <br><strong>Location:</strong> ${user.location.city}, ${user.location.country}
                     <br><strong>Phone:</strong> ${user.phone}
                 `;
+
+        // 🟢 Substitui o output pelo nosso html
+        output.innerHTML = html
+
     } catch (error) {
+        // 🟡 Caso haja um erro na API, colocar erro no output
         output.innerHTML = `<strong style="color: red;">Error:</strong> ${error.message}`;
     }
 }
 
 async function fetchRandomJoke() {
+    // 🟢 Obter a caixa de output para preencher com os dados da API
     const output = document.getElementById('apiOutput');
+
+    // 🟢 Ao clicar no botão, informar que vamos carregar informações da joke
     output.innerHTML = '<div class="loading">Fetching joke...</div>';
 
     try {
+        // 🟢 Obter uma piada aleatória da API
         const response = await fetch('https://official-joke-api.appspot.com/random_joke');
+
+        // 🟢 Transformar o texto de resultado em JSON
         const joke = await response.json();
 
-        output.innerHTML = `
+        // 🟡 Criar o nosso elemento HTML com título, imagem, nome, email, localização, phone (tudo vindo da API)
+        const html = `
                     <h3>Random Joke:</h3>
                     <p><strong>Setup:</strong> ${joke.setup}</p>
                     <p><strong>Punchline:</strong> ${joke.punchline}</p>
                     <p><em>Type: ${joke.type}</em></p>
                 `;
+
+        // 🟢 Substitui o output pelo nosso html
+        output.innerHTML = html
     } catch (error) {
+        // 🟡 Caso haja um erro na API, colocar erro no output
         output.innerHTML = `<strong style="color: red;">Error:</strong> ${error.message}`;
     }
 }

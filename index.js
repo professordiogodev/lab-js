@@ -26,6 +26,7 @@ function demonstrateDataTypes() {
     for (let [type, value] of Object.entries(examples)) {
         html += `<strong>${type}:</strong> ${JSON.stringify(value)} (typeof: ${typeof value})<br>`;
     }
+
     output.innerHTML = html;
 }
 
@@ -35,9 +36,10 @@ function changeColor() {
     const r = Math.floor(Math.random() * 256);
     const g = Math.floor(Math.random() * 256);
     const b = Math.floor(Math.random() * 256);
-    box.style.background = `rgb(${r}, ${g}, ${b})`;
+    box.style.background = `rgb(${r}, ${g}, ${b})`; // rgb(248, 176, 142)
 }
 
+// Alternar entre 300 (width, height) e 200 (width, height)
 function changeSize() {
     const box = document.getElementById('colorBox');
     const currentWidth = parseInt(getComputedStyle(box).width);
@@ -46,34 +48,44 @@ function changeSize() {
 }
 
 // 3. Counter Application
+
+// Aumentar o contador e fazer update ao HTML
 function incrementCounter() {
     counter++;
     updateCounterDisplay();
 }
 
+// Diminuir o contador e fazer update ao HTML
 function decrementCounter() {
     counter--;
     updateCounterDisplay();
 }
 
+// Resetar o contador e fazer update ao HTML
 function resetCounter() {
     counter = 0;
     updateCounterDisplay();
 }
 
+// Update ao HTML em função do que está na variável "counter" declarada acima
 function updateCounterDisplay() {
     document.getElementById('counterDisplay').textContent = counter;
 }
 
 // 4. Arrays & Higher-Order Functions
 function demonstrateArrays() {
+    // Começar um array com números
     const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
+    // Manipulação de arrays
     const doubled = numbers.map(n => n * 2);
     const evens = numbers.filter(n => n % 2 === 0);
     const sum = numbers.reduce((acc, n) => acc + n, 0);
 
+    // Obter um elemento HTML para preencher
     const output = document.getElementById('arrayOutput');
+
+    // Preencher esse elemento com um conjunto grande de código HTML
     output.innerHTML = `
                 <h3>Original Array:</h3> ${JSON.stringify(numbers)}<br><br>
                 <h3>Map (doubled):</h3> ${JSON.stringify(doubled)}<br><br>
@@ -84,14 +96,17 @@ function demonstrateArrays() {
 
 // 5. Objects & JSON
 function addStudent() {
+    // Obter os valores dos inputs
     const name = document.getElementById('studentName').value;
     const grade = parseFloat(document.getElementById('studentGrade').value);
 
+    // Verificar se os inputs estão preenchidos
     if (!name || isNaN(grade)) {
         alert('Please enter valid name and grade!');
         return;
     }
 
+    // Criar um novo objeto JSON
     const student = {
         id: Date.now(),
         name: name,
@@ -99,9 +114,11 @@ function addStudent() {
         passed: grade >= 10
     };
 
+    // Adicionar um novo aluno no array
     students.push(student);
     displayStudents();
 
+    // Limpar os inputs
     document.getElementById('studentName').value = '';
     document.getElementById('studentGrade').value = '';
 }

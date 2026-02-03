@@ -1,13 +1,18 @@
 // Global variables
-let counter = 0;
-let students = [];
-let todos = [];
+let counter = 0; // Variável para o exercício do contador
+let students = []; // Lista de estudantes
+let todos = []; // Lista de afazeres
+
+// Barra de progresso
 let progressInterval = null;
 let currentProgress = 0;
 
 // 1. Data Types Demonstration
 function demonstrateDataTypes() {
+    // Obter o quadrado de demonstração dos tipos de dados
     const output = document.getElementById('dataTypesOutput');
+
+    // Criar um objeto com exemplos (para preencher o nosso HTML)
     const examples = {
         string: 'Hello, JavaScript!',
         number: 42,
@@ -111,7 +116,7 @@ function addStudent() {
         id: Date.now(),
         name: name,
         grade: grade,
-        passed: grade >= 10
+        passed: grade >= 10 // colocar passed: True caso a nota seja >= 10
     };
 
     // Adicionar um novo aluno no array
@@ -124,37 +129,68 @@ function addStudent() {
 }
 
 function displayStudents() {
+
+    // Obter o output (mensagem) para preencher com informação se necessário
     const output = document.getElementById('studentsOutput');
+
+    // Se não houver alunos, colocar "No students yet"
     if (students.length === 0) {
         output.innerHTML = '<em>No students yet...</em>';
-        return;
+        return; // aqui, se não houver alunos, terminamos a função
     }
 
+    // Calcular a média de todos os alunos
     const avgGrade = students.reduce((acc, s) => acc + s.grade, 0) / students.length;
 
+    // Construir todo o HTML:
+
+    // 1. Colocar um título
     let html = '<h3>Students List:</h3>';
+
+    // 2. Para cada aluno, colocar nome, nota/20, e se passou colocar Passed
     students.forEach(student => {
         html += `
                     📚 <strong>${student.name}</strong>: ${student.grade}/20 
                     ${student.passed ? '✅ Passed' : '❌ Failed'}<br>
                 `;
     });
+
+    // 3. No final, colocar a média
     html += `<br><strong>Average Grade:</strong> ${avgGrade.toFixed(2)}`;
+
+    // 4. Colocar o HTML final no elemento obtido anteriormente
     output.innerHTML = html;
 }
 
 // 6. Event Handling - Grid
 function generateGrid() {
     const container = document.getElementById('gridContainer');
+
+    // Limpar quaisquer itens que existam anteriormente e recomeçar
     container.innerHTML = '';
 
+    // Gerar automaticamente 12 elementos (do 1 ao 12) com a cor inicial resetada
     for (let i = 1; i <= 12; i++) {
+
+        // Demonstração de DOM para criação de elementos:
+        
+        // 1. Criar um elemento
         const item = document.createElement('div');
+        
+        // 2. Colocar uma classe
         item.className = 'grid-item';
+
+        // 3. Colocar texto
         item.textContent = `Item ${i}`;
+
+        // 4. Colocar evento (ao clicar, mudar o background)
+        // Gerar um background aleatório ao clicar
         item.onclick = function () {
+            // ESTA LINHA (ABAIXO) SÓ É EXECUTADA SE CLICAREM NO ELEMENTO!!!
             this.style.background = `hsl(${Math.random() * 360}, 70%, 60%)`;
         };
+
+        // 5. Colocar o item na lista total de elementos
         container.appendChild(item);
     }
 }

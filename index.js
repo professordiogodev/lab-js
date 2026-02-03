@@ -1,7 +1,13 @@
-// Global variables
-let counter = 0; // Variável para o exercício do contador
-let students = []; // Lista de estudantes
-let todos = []; // Lista de afazeres
+// Variáveis Globais!
+
+// Variável para o exercício do contador
+let counter = 0;
+
+// Lista de estudantes
+let students = [];
+
+// Lista de afazeres
+let todos = [];
 
 // Barra de progresso
 let progressInterval = null;
@@ -27,7 +33,7 @@ function demonstrateDataTypes() {
 
     // Para cada propriedade no objeto, vamos extrair o tipo e o valor
     // Usando esta função especial Object.entries, vamos obter pares de chave-valor
-    // Abaixo chamados de [type, value]
+    // Abaixo chamados de [type, value] 🟠🟠🟠
     for (let [type, value] of Object.entries(examples)) {
         html += `<strong>${type}:</strong> ${JSON.stringify(value)} (typeof: ${typeof value})<br>`;
     }
@@ -35,7 +41,7 @@ function demonstrateDataTypes() {
     output.innerHTML = html;
 }
 
-// 2. DOM Manipulation - Color Box
+// 🟡 2. DOM Manipulation - Color Box
 function changeColor() {
     const box = document.getElementById('colorBox');
     const r = Math.floor(Math.random() * 256);
@@ -44,7 +50,7 @@ function changeColor() {
     box.style.background = `rgb(${r}, ${g}, ${b})`; // rgb(248, 176, 142)
 }
 
-// Alternar entre 300 (width, height) e 200 (width, height)
+// 🟡 Alternar entre 300 (width, height) e 200 (width, height)
 function changeSize() {
     const box = document.getElementById('colorBox');
     const currentWidth = parseInt(getComputedStyle(box).width);
@@ -54,43 +60,44 @@ function changeSize() {
 
 // 3. Counter Application
 
-// Aumentar o contador e fazer update ao HTML
+// 🟢 Aumentar o contador e fazer update ao HTML
 function incrementCounter() {
     counter++;
     updateCounterDisplay();
 }
 
-// Diminuir o contador e fazer update ao HTML
+// 🟢 Diminuir o contador e fazer update ao HTML
 function decrementCounter() {
     counter--;
     updateCounterDisplay();
 }
 
-// Resetar o contador e fazer update ao HTML
+// 🟢 Resetar o contador e fazer update ao HTML
 function resetCounter() {
     counter = 0;
     updateCounterDisplay();
 }
 
-// Update ao HTML em função do que está na variável "counter" declarada acima
+// 🟢 Update ao HTML em função do que está na variável "counter" declarada acima
 function updateCounterDisplay() {
     document.getElementById('counterDisplay').textContent = counter;
 }
 
 // 4. Arrays & Higher-Order Functions
 function demonstrateArrays() {
-    // Começar um array com números
+    
+    // 🟢 Começar um array com números
     const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-    // Manipulação de arrays
+    // 🟡 Manipulação de arrays
     const doubled = numbers.map(n => n * 2);
     const evens = numbers.filter(n => n % 2 === 0);
     const sum = numbers.reduce((acc, n) => acc + n, 0);
 
-    // Obter um elemento HTML para preencher
+    // 🟢 Obter um elemento HTML para preencher
     const output = document.getElementById('arrayOutput');
 
-    // Preencher esse elemento com um conjunto grande de código HTML
+    // 🟡 Preencher esse elemento com um conjunto grande de código HTML
     output.innerHTML = `
                 <h3>Original Array:</h3> ${JSON.stringify(numbers)}<br><br>
                 <h3>Map (doubled):</h3> ${JSON.stringify(doubled)}<br><br>
@@ -99,19 +106,19 @@ function demonstrateArrays() {
             `;
 }
 
-// 5. Objects & JSON
+// 🟢 5. Objects & JSON
 function addStudent() {
-    // Obter os valores dos inputs
+    // 🟢 Obter os valores dos inputs
     const name = document.getElementById('studentName').value;
     const grade = parseFloat(document.getElementById('studentGrade').value);
 
-    // Verificar se os inputs estão preenchidos
+    // 🟢 Verificar se os inputs estão preenchidos
     if (!name || isNaN(grade)) {
         alert('Please enter valid name and grade!');
         return;
     }
 
-    // Criar um novo objeto JSON
+    // 🟢 Criar um novo objeto JSON
     const student = {
         id: Date.now(),
         name: name,
@@ -119,35 +126,35 @@ function addStudent() {
         passed: grade >= 10 // colocar passed: True caso a nota seja >= 10
     };
 
-    // Adicionar um novo aluno no array
+    // 🟢 Adicionar um novo aluno no array
     students.push(student);
     displayStudents();
 
-    // Limpar os inputs
+    // 🟢 Limpar os inputs
     document.getElementById('studentName').value = '';
     document.getElementById('studentGrade').value = '';
 }
 
 function displayStudents() {
 
-    // Obter o output (mensagem) para preencher com informação se necessário
+    // 🟢 Obter o output (mensagem) para preencher com informação se necessário
     const output = document.getElementById('studentsOutput');
 
-    // Se não houver alunos, colocar "No students yet"
+    // 🟢 Se não houver alunos, colocar "No students yet"
     if (students.length === 0) {
         output.innerHTML = '<em>No students yet...</em>';
         return; // aqui, se não houver alunos, terminamos a função
     }
 
-    // Calcular a média de todos os alunos
+    // 🟡 Calcular a média de todos os alunos
     const avgGrade = students.reduce((acc, s) => acc + s.grade, 0) / students.length;
 
-    // Construir todo o HTML:
+    // 🟡 Construir todo o HTML:
 
-    // 1. Colocar um título
+    // 🟢 1. Colocar um título
     let html = '<h3>Students List:</h3>';
 
-    // 2. Para cada aluno, colocar nome, nota/20, e se passou colocar Passed
+    // 🟠 2. Para cada aluno, colocar nome, nota/20, e se passou colocar Passed
     students.forEach(student => {
         html += `
                     📚 <strong>${student.name}</strong>: ${student.grade}/20 
@@ -155,42 +162,43 @@ function displayStudents() {
                 `;
     });
 
-    // 3. No final, colocar a média
+    // 🟡 3. No final, colocar a média
     html += `<br><strong>Average Grade:</strong> ${avgGrade.toFixed(2)}`;
 
-    // 4. Colocar o HTML final no elemento obtido anteriormente
+    // 🟢 4. Colocar o HTML final no elemento obtido anteriormente
     output.innerHTML = html;
 }
 
-// 6. Event Handling - Grid
+// 🟡 6. Event Handling - Grid
 function generateGrid() {
+    // 🟢 Obter o container que vai ter todos os itens da nossa grelha
     const container = document.getElementById('gridContainer');
 
-    // Limpar quaisquer itens que existam anteriormente e recomeçar
+    // 🟢 Limpar quaisquer itens que existam anteriormente e recomeçar
     container.innerHTML = '';
 
-    // Gerar automaticamente 12 elementos (do 1 ao 12) com a cor inicial resetada
+    // 🟡 Gerar automaticamente 12 elementos (do 1 ao 12) com a cor inicial resetada
     for (let i = 1; i <= 12; i++) {
 
-        // Demonstração de DOM para criação de elementos:
+        // 🟡 Demonstração de DOM para criação de elementos:
         
-        // 1. Criar um elemento
+        // 🟡 1. Criar um elemento
         const item = document.createElement('div');
         
-        // 2. Colocar uma classe
+        // 🟡 2. Colocar uma classe
         item.className = 'grid-item';
 
-        // 3. Colocar texto
+        // 🟡 3. Colocar texto
         item.textContent = `Item ${i}`;
 
-        // 4. Colocar evento (ao clicar, mudar o background)
-        // Gerar um background aleatório ao clicar
+        // 🟡 4. Colocar evento (ao clicar, mudar o background)
+        // 🟡 Gerar um background aleatório ao clicar
         item.onclick = function () {
             // ESTA LINHA (ABAIXO) SÓ É EXECUTADA SE CLICAREM NO ELEMENTO!!!
             this.style.background = `hsl(${Math.random() * 360}, 70%, 60%)`;
         };
 
-        // 5. Colocar o item na lista total de elementos
+        // 🟡 5. Colocar o item na lista total de elementos
         container.appendChild(item);
     }
 }
@@ -199,23 +207,34 @@ function generateGrid() {
 window.addEventListener('load', generateGrid);
 
 // 7. Todo List (CRUD)
-function addTodo() {
-    const input = document.getElementById('todoInput');
-    const text = input.value.trim();
 
+// 🟡 Create - Adicionar um Todo
+function addTodo() {
+
+    // Obter o texto do input do todo a ser adicionado
+    const input = document.getElementById('todoInput');
+    const text = input.value.trim(); // Limpar os espaços à frente e atrás
+
+    // Verificar se o texto está vazio
     if (!text) {
         alert('Please enter a task!');
         return;
     }
 
+    // Criar um objeto JavaScript para guardar as infos do todo
     const todo = {
         id: Date.now(),
         text: text,
         completed: false
     };
 
+    // Adicionar o objeto à lista
     todos.push(todo);
+
+    // Limpar o input
     input.value = '';
+
+    // Mostrar todos os Todos
     renderTodos();
 }
 

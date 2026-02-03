@@ -9,8 +9,10 @@ let students = [];
 // Lista de afazeres
 let todos = [];
 
-// Barra de progresso
+// Interval de progresso - irá conter um objeto de timer
 let progressInterval = null;
+
+// Progresso atual (percentagem)
 let currentProgress = 0;
 
 // 1. Data Types Demonstration
@@ -367,18 +369,31 @@ async function fetchRandomJoke() {
     }
 }
 
-// 9. Progress Bar & Timers
+// 🟡 9. Progress Bar & Timers
 function startProgress() {
+
+    // 🟡 Caso o timer exista, não fazer nada (terminar a função)
     if (progressInterval) return; // Already running
 
+    // 🟡 Resetar o progresso
     currentProgress = 0;
+
+    // 🟡 Obter o retângulo que faz fill ao elemento
     const fill = document.getElementById('progressFill');
 
+    // 🟡 A cada 0.05 segundos, executar o ciclo abaixo
     progressInterval = setInterval(() => {
-        currentProgress += 1;
-        fill.style.width = currentProgress + '%';
-        fill.textContent = currentProgress + '%';
 
+        // 🟢 Aumentar 1%
+        currentProgress += 1;
+
+        // 🟡 Colocar o width de acordo com o currentProgress
+        fill.style.width = currentProgress + '%'; // <- Isto é puro CSS, width: 70%
+
+        // 🟢 Colocar o texto de acordo com o currentProgress (+ %)
+        fill.textContent = currentProgress + '%'; // <- Isto é puro texto, mete um texto a dizer "70%"
+
+        // 🟡 Caso chegue a 100%, parar o progresso (e fazer um alerta informativo)
         if (currentProgress >= 100) {
             stopProgress();
             alert('Progress Complete! 🎉');
@@ -386,6 +401,7 @@ function startProgress() {
     }, 50);
 }
 
+// 🟡 Ao parar o progresso, limpamos o timer (ele deixa de funcionar)
 function stopProgress() {
     if (progressInterval) {
         clearInterval(progressInterval);
@@ -394,37 +410,62 @@ function stopProgress() {
 }
 
 // 10. Local Storage
+
+/*
+    Temos duas maneiras de guardar informações no computador.
+    Utilizamos localStorage ou cookies.
+    As cookies podem vir a ser acedidas pelo servidor.
+    O localStorage é apenas guardado localmente.
+*/
+
+// 🟢 Guardar informações no localStorage
 function saveToStorage() {
+
+    // 🟢 Obter par chave e valor dos inputs
     const key = document.getElementById('storageKey').value;
     const value = document.getElementById('storageValue').value;
 
+    // 🟢 Rejeitar caso não seja passado chave (e terminar função)
     if (!key) {
         alert('Please enter a key!');
         return;
     }
 
+    // 🟢 Caso tudo corra bem, colocar coisas na localStorage
     localStorage.setItem(key, value);
+
+    // 🟢 Atualizar o display com o que estiver na localStorage
     displayStorage();
 }
 
+// Obter informações do localStorage
+// Obter um valor da key inserida no input do HTML
 function loadFromStorage() {
+    // 🟡 Aqui, estamos apenas a obter o que está no input da "key"
     const key = document.getElementById('storageKey').value;
 
+    // 🟢 Terminar a função (com aviso) caso não esteja nada na key
     if (!key) {
         alert('Please enter a key to load!');
         return;
     }
 
+    // 🟡 Obter o valor da key guardada dentro do localStorage do computador
     const value = localStorage.getItem(key);
+
+    // 🟢 Obter o elemento HTML para colocar o nosso output
     const output = document.getElementById('storageOutput');
 
+    // 🟡 Caso haja valor, inseri-lo no HTML
     if (value !== null) {
         output.innerHTML = `<strong>Value for "${key}":</strong> ${value}`;
     } else {
+        // 🟡 Caso não haja valor, dizer "no value found"
         output.innerHTML = `<strong>No value found for key "${key}"</strong>`;
     }
 }
 
+// Limpar tudo o que há no localStorage, e atualizar a storage
 function clearStorage() {
     if (confirm('Clear all local storage data?')) {
         localStorage.clear();
@@ -432,21 +473,33 @@ function clearStorage() {
     }
 }
 
+// 🟡 Mostrar as informações obtidas do localStorage
+// Vamos obter tudo o que for achado dentro do localStorage
 function displayStorage() {
+    // 🟢 Obter o output do HTML para inserir as nossas coisas
     const output = document.getElementById('storageOutput');
+
+    // 🟡 Obter um array com todas as chaves presentes no localStorage
     const keys = Object.keys(localStorage);
 
+    // 🟢 Caso não haja key, informar que localStorage está vazia
     if (keys.length === 0) {
         output.innerHTML = '<em>Local storage is empty</em>';
         return;
     }
 
+    // 🟢 Criar um HTML para colocar todos os elementos da localStorage
     let html = '<h3>Current Storage:</h3>';
+
+    // 🟡 Para cada chave encontrada dentro da localStorage do computador, colocar chave + valor
     keys.forEach(key => {
         html += `<strong>${key}:</strong> ${localStorage.getItem(key)}<br>`;
     });
+
+    // 🟢 Substituir o conteúdo do elemento da página pelo HTML que nós criámos
     output.innerHTML = html;
 }
 
 // Initialize storage display
+// 🟢 Mostrar o que está no storage.
 displayStorage();

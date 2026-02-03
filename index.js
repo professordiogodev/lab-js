@@ -19,6 +19,10 @@ function demonstrateDataTypes() {
     };
 
     let html = '<h3>JavaScript Data Types:</h3>';
+
+    // Para cada propriedade no objeto, vamos extrair o tipo e o valor
+    // Usando esta função especial Object.entries, vamos obter pares de chave-valor
+    // Abaixo chamados de [type, value]
     for (let [type, value] of Object.entries(examples)) {
         html += `<strong>${type}:</strong> ${JSON.stringify(value)} (typeof: ${typeof value})<br>`;
     }
